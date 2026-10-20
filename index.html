@@ -86,6 +86,15 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--focus);b
 .chips input:checked+span{background:var(--amber);color:var(--amber-ink);font-weight:500}
 .chips input:focus-visible+span{outline:2px solid var(--focus);outline-offset:2px}
 .chips label:hover span{border-color:var(--hair)}
+.chips .x{all:unset;cursor:pointer;margin-left:2px;font-size:15px;line-height:1;opacity:.6}
+.chips .x:hover{opacity:1}
+.allbtn{all:unset;cursor:pointer;display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;border:1px dashed var(--slate-soft);font-size:13.5px;font-weight:500;color:var(--ink)}
+.allbtn:hover{border-style:solid}
+.allbtn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.addrow{display:flex;gap:8px}
+.addrow input{flex:1;min-width:0}
+.addbtn{all:unset;cursor:pointer;padding:0 18px;border-radius:8px;background:var(--ink);color:var(--paper);font-weight:600;font-size:14px;display:inline-flex;align-items:center}
+.addbtn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
 .note{display:grid;gap:4px;padding:14px 16px;border-left:3px solid var(--amber);background:var(--chip);border-radius:0 8px 8px 0;font-size:14px;color:var(--ink)}
 .note .mono{color:var(--slate)}
@@ -198,7 +207,7 @@ const S=[
   {id:"c_visit",label:"How do patients visit?",type:"chips",options:["By appointment only","Walk-ins welcome","Both"]},
   {id:"c_emerg",label:"Do you handle dental emergencies?",type:"chips",options:["Yes, same day","Yes, 24x7 on call","No"]},
   {id:"c_chairs",label:"Number of dental chairs",type:"number"},
-  {id:"c_facil",label:"Facilities",type:"multi",options:["Parking","Wheelchair access","Lift","Air conditioned","Kids play area","Card / UPI payments","Waiting lounge"],other:1,wide:1},
+  {id:"c_facil",all:1,label:"Facilities",type:"multi",options:["Parking","Wheelchair access","Lift","Air conditioned","Kids play area","Card / UPI payments","Waiting lounge"],other:1,wide:1},
   {id:"c_branch",label:"Other branches, if any",type:"textarea",wide:1}
  ]},
  {id:"team",title:"Your team",desc:"Showing the people behind the care makes a clinic feel real and trustworthy.",fields:[
@@ -207,20 +216,20 @@ const S=[
   {id:"t_show",label:"Should the team appear on the website?",type:"chips",options:["Yes, with photos","Names only","Only me for now"]}
  ]},
  {id:"services",title:"Services you offer",desc:"Select everything you provide. We will create clear, search friendly pages for your key treatments.",fields:[
-  {id:"s_list",label:"Treatments",type:"multi",wide:1,options:["Dental implants","Crowns & bridges","Full mouth rehabilitation","All-on-4 / All-on-6","Complete dentures","Partial dentures","Implant supported dentures","Veneers","Smile makeover","Bite correction / worn teeth","Consultation & check-up","Scaling & cleaning","Fillings","Root canal treatment","Re-RCT","Braces","Clear aligners","Teeth whitening","Gum treatment","Laser dentistry","Wisdom tooth removal","Extractions","Kids dentistry","Sedation / anxiety care","Bad breath treatment","TMJ / jaw pain","Night guards","Dental X-ray / OPG","Cosmetic bonding"],other:1},
+  {id:"s_list",all:1,label:"Treatments",type:"multi",wide:1,options:["Dental implants","Crowns & bridges","Full mouth rehabilitation","All-on-4 / All-on-6","Complete dentures","Partial dentures","Implant supported dentures","Veneers","Smile makeover","Bite correction / worn teeth","Consultation & check-up","Scaling & cleaning","Fillings","Root canal treatment","Re-RCT","Braces","Clear aligners","Teeth whitening","Gum treatment","Laser dentistry","Wisdom tooth removal","Extractions","Kids dentistry","Sedation / anxiety care","Bad breath treatment","TMJ / jaw pain","Night guards","Dental X-ray / OPG","Cosmetic bonding"],other:1},
   {id:"s_top",label:"Top 3 treatments you want more patients for",type:"textarea",wide:1,hint:"These get the most prominence on the homepage and in Google targeting."},
-  {id:"s_crown",label:"Crown and bridge materials you offer",type:"multi",wide:1,options:["Zirconia","E-max (lithium disilicate)","PFM (porcelain fused to metal)","Metal","Temporary / provisional"],other:1},
+  {id:"s_crown",all:1,label:"Crown and bridge materials you offer",type:"multi",wide:1,options:["Zirconia","E-max (lithium disilicate)","PFM (porcelain fused to metal)","Metal","Temporary / provisional"],other:1},
   {id:"s_lab",label:"Who makes your crowns, dentures and prosthetics?",type:"chips",options:["In house lab","Partner lab","Both"]},
   {id:"s_labname",label:"Lab name or country of materials, if you want it mentioned",type:"text",wide:1,hint:"Some patients trust named labs or imported materials more."},
   {id:"s_warranty",label:"Warranty you give on crowns, bridges or implants",type:"text",wide:1,ph:"Zirconia crowns: 10 years, implants: lifetime on fixture"},
   {id:"s_rehab",label:"Full mouth rehab or implant cases done so far (approx.)",type:"text",ph:"150+ implants, 30 full mouth cases"},
   {id:"s_price",label:"Should prices appear on the website?",type:"chips",options:["Yes, exact prices","Starting from prices","No, on consultation"]},
   {id:"s_pricelist",label:"Prices or starting prices for key treatments",type:"textarea",wide:1,hint:"Only if you chose to show them. Include INR and, if you quote them, CAD and AUD."},
-  {id:"s_pay",label:"Payment options",type:"multi",options:["Cash","UPI","Cards","EMI / no cost EMI","Insurance (cashless)","Insurance (reimbursement)","International cards","Bank transfer"],other:1,wide:1},
+  {id:"s_pay",all:1,label:"Payment options",type:"multi",options:["Cash","UPI","Cards","EMI / no cost EMI","Insurance (cashless)","Insurance (reimbursement)","International cards","Bank transfer"],other:1,wide:1},
   {id:"s_consult",label:"Consultation fee",type:"text",ph:"INR 500, adjusted against treatment"}
  ]},
  {id:"tech",title:"Technology and hygiene",desc:"Equipment and sterilisation standards reassure nervous and international patients.",fields:[
-  {id:"tc_list",label:"Equipment at the clinic",type:"multi",wide:1,options:["Digital X-ray / RVG","OPG","CBCT 3D scan","Intraoral scanner","Intraoral camera","Dental laser","Dental microscope","Rotary endodontics","CAD/CAM same day crowns","Implant motor & guided surgery","Class B autoclave","Digital smile design"],other:1},
+  {id:"tc_list",all:1,label:"Equipment at the clinic",type:"multi",wide:1,options:["Digital X-ray / RVG","OPG","CBCT 3D scan","Intraoral scanner","Intraoral camera","Dental laser","Dental microscope","Rotary endodontics","CAD/CAM same day crowns","Implant motor & guided surgery","Class B autoclave","Digital smile design"],other:1},
   {id:"tc_brands",label:"Implant, aligner or material brands you use",type:"text",wide:1,ph:"Nobel Biocare, Straumann, Invisalign, ..."},
   {id:"tc_steril",label:"Your sterilisation and safety protocol",type:"textarea",wide:1,hint:"For example single use kits, sealed pouches, Class B autoclave cycles, fumigation."}
  ]},
@@ -233,9 +242,9 @@ const S=[
   {id:"i_virtual",label:"Do you offer a virtual consultation before travel?",type:"chips",options:["Yes, video call","Yes, on WhatsApp with photos / X-rays","Not yet, but open to it","No"]},
   {id:"i_tz",label:"When can you take calls from Canada / Australia?",type:"text",wide:1,ph:"Early mornings IST for Canada, evenings IST for Australia"},
   {id:"i_stay",label:"Typical stay needed for main treatments",type:"textarea",wide:1,ph:"Implants: 2 visits, 5 days then 4 days after 3 months"},
-  {id:"i_help",label:"Help you offer visiting patients",type:"multi",wide:1,options:["Airport pickup","Hotel / stay suggestions","Local transport","Treatment plan & quote in advance","Express timelines","Coordinator on WhatsApp","Documents for insurance claims"],other:1},
+  {id:"i_help",all:1,label:"Help you offer visiting patients",type:"multi",wide:1,options:["Airport pickup","Hotel / stay suggestions","Local transport","Treatment plan & quote in advance","Express timelines","Coordinator on WhatsApp","Documents for insurance claims"],other:1},
   {id:"i_currency",label:"Do you quote in CAD / AUD?",type:"chips",options:["Yes","INR only","On request"]},
-  {id:"i_pay",label:"How do international patients pay?",type:"multi",options:["International cards","Wire transfer","Wise / remittance","Cash on visit","Advance deposit"],other:1,wide:1},
+  {id:"i_pay",all:1,label:"How do international patients pay?",type:"multi",options:["International cards","Wire transfer","Wise / remittance","Cash on visit","Advance deposit"],other:1,wide:1},
   {id:"i_after",label:"How do you handle aftercare once they fly back?",type:"textarea",wide:1,hint:"Follow ups, warranty or guarantee on work, tie ups with dentists abroad."},
   {id:"i_reviews",label:"Do you have reviews or videos from international patients?",type:"chips",options:["Yes, can share","A few","Not yet"]}
  ]},
@@ -248,12 +257,12 @@ const S=[
   {id:"p_cases",label:"Two or three cases you are proud of",type:"textarea",wide:1,hint:"Short notes are enough. Example: full mouth implants for a 68 year old patient from Toronto in 7 days."}
  ]},
  {id:"goals",title:"Website goals",desc:"What should the website do for your practice, and what should it say first?",fields:[
-  {id:"g_goal",label:"Main goals for the website",type:"multi",wide:1,options:["More appointment calls","More WhatsApp enquiries","Attract international patients","Rank higher on Google locally","Build credibility","Promote high value treatments","Replace an outdated website"],other:1},
+  {id:"g_goal",all:1,label:"Main goals for the website",type:"multi",wide:1,options:["More appointment calls","More WhatsApp enquiries","Attract international patients","Rank higher on Google locally","Build credibility","Promote high value treatments","Replace an outdated website"],other:1},
   {id:"g_highlight",label:"What do you want highlighted most on the website?",type:"textarea",wide:1,req:1,hint:"The first things a new patient should notice about you and your clinic."},
   {id:"g_usp",label:"What makes you different from other clinics nearby?",type:"textarea",wide:1},
   {id:"g_patients",label:"Your ideal patients",type:"textarea",wide:1,hint:"Families, working professionals, seniors needing implants, anxious patients, NRIs..."},
   {id:"g_areas",label:"Areas you want to be found in on Google",type:"textarea",wide:1,ph:"Dwarka Sector 6, 10, 12, Dwarka Mor, Palam, Janakpuri, Uttam Nagar"},
-  {id:"g_book",label:"How should patients book?",type:"multi",options:["Booking calendar built into the website","Call","WhatsApp","Online enquiry form","Practo / booking app link"],other:1,wide:1},
+  {id:"g_book",all:1,label:"How should patients book?",type:"multi",options:["Booking calendar built into the website","Call","WhatsApp","Online enquiry form","Practo / booking app link"],other:1,wide:1},
   {id:"g_slots",label:"For online booking: appointment length and any days or slots to block",type:"text",wide:1,ph:"30 min slots, lunch break 2 to 3 pm"},
   {id:"g_faq",label:"Questions patients ask you most often",type:"textarea",wide:1,hint:"These become your FAQ section and help with Google."},
   {id:"g_avoid",label:"Anything you do not want on the website",type:"textarea",wide:1}
@@ -288,6 +297,8 @@ const PREFILL={d_name:"Dr. Mamta Kumari",d_title:"Prosthodontist",d_quals:"MDS (
  c_phone:"+91 99991 74483",c_hours:"All days, 10:00 AM to 8:00 PM",p_rating:"5.0 from 8 Google reviews",
  b_site:"No website yet",g_areas:"Dwarka Sector 11, "};
 let data={}; try{data=JSON.parse(localStorage.getItem(KEY)||"null")||Object.assign({},PREFILL)}catch(e){data=Object.assign({},PREFILL)}
+Object.keys(data).filter(k=>k.endsWith("__other")).forEach(k=>{const id=k.slice(0,-7),v=(data[k]||"").trim();
+  if(v){data[id+"__extra"]=(data[id+"__extra"]||[]).concat(v);data[id]=(Array.isArray(data[id])?data[id]:[]).concat(v)} delete data[k]});
 let cur=0;
 const form=document.getElementById("form"), rail=document.getElementById("rail");
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -300,9 +311,12 @@ function fieldHTML(f){
   const v=data[f.id];
   if(f.type==="chips"||f.type==="multi"){
     const t=f.type==="chips"?"radio":"checkbox", sel=Array.isArray(v)?v:(v?[v]:[]);
-    const chips=f.options.map((o,i)=>`<label><input type="${t}" name="${f.id}" id="${f.id}_${i}" value="${esc(o)}" ${sel.includes(o)?"checked":""}><span>${esc(o)}</span></label>`).join("");
-    const other=f.other?`<input type="text" id="${f.id}__other" data-other="${f.id}" placeholder="Other, please specify" value="${esc(data[f.id+"__other"]||"")}">`:"";
-    return `<div class="f${w}" role="group" aria-labelledby="${f.id}_l"><span class="l" id="${f.id}_l">${esc(f.label)}${r}</span>${hint}<div class="chips">${chips}</div>${other}</div>`;
+    const extra=data[f.id+"__extra"]||[];
+    const chips=f.options.map((o,i)=>`<label><input type="${t}" name="${f.id}" id="${f.id}_${i}" value="${esc(o)}" ${sel.includes(o)?"checked":""}><span>${esc(o)}</span></label>`).join("")
+      +extra.map((o,i)=>`<label><input type="${t}" name="${f.id}" id="${f.id}_x${i}" value="${esc(o)}" ${sel.includes(o)?"checked":""}><span>${esc(o)}<button type="button" class="x" data-remove="${f.id}" data-val="${esc(o)}" aria-label="Remove ${esc(o)}">×</button></span></label>`).join("")
+      +(f.all&&t==="checkbox"?`<button type="button" class="allbtn" data-all="${f.id}">${allOn(f)?"Clear all":"Select all"}</button>`:"");
+    const other=f.other?`<div class="addrow"><input type="text" id="${f.id}__add" data-add="${f.id}" placeholder="Add another option" enterkeyhint="done"><button type="button" class="addbtn" data-addbtn="${f.id}">Add</button></div>`:"";
+    return `<div class="f${w}" data-field="${f.id}" role="group" aria-labelledby="${f.id}_l"><span class="l" id="${f.id}_l">${esc(f.label)}${r}</span>${hint}<div class="chips">${chips}</div>${other}</div>`;
   }
   const ph=f.ph?` placeholder="${esc(f.ph)}"`:"";
   const ctrl=f.type==="textarea"?`<textarea id="${f.id}" name="${f.id}"${ph}>${esc(v||"")}</textarea>`
@@ -310,6 +324,26 @@ function fieldHTML(f){
   return `<div class="f${w}"><label class="l" for="${f.id}">${esc(f.label)}${r}</label>${hint}${ctrl}</div>`;
 }
 
+const FIELDS={}; S.forEach(s=>s.fields.forEach(f=>FIELDS[f.id]=f));
+function allOpts(f){return f.options.concat(data[f.id+"__extra"]||[])}
+function allOn(f){const v=data[f.id]||[];return Array.isArray(v)&&allOpts(f).every(o=>v.includes(o))}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data));const sv=document.getElementById("saved");if(sv)sv.textContent="Saved on this device"}catch(e){}}
+function refreshField(id,focusAdd){
+  const el=form.querySelector(`[data-field="${id}"]`); if(!el)return;
+  const tmp=document.createElement("div"); tmp.innerHTML=fieldHTML(FIELDS[id]); el.replaceWith(tmp.firstElementChild);
+  if(focusAdd){const i=document.getElementById(id+"__add"); if(i)i.focus()}
+  save(); renderRail();
+}
+function addOption(id){
+  const inp=document.getElementById(id+"__add"); if(!inp)return;
+  const val=inp.value.trim(); if(!val){inp.focus();return}
+  const f=FIELDS[id], ex=data[id+"__extra"]||[];
+  if(!allOpts(f).some(o=>o.toLowerCase()===val.toLowerCase()))ex.push(val);
+  data[id+"__extra"]=ex;
+  const match=allOpts(f).find(o=>o.toLowerCase()===val.toLowerCase());
+  const cur=Array.isArray(data[id])?data[id]:[]; if(!cur.includes(match))cur.push(match); data[id]=cur;
+  refreshField(id,true);
+}
 function filled(s){return s.fields.some(f=>{const v=data[f.id];return Array.isArray(v)?v.length:(v&&String(v).trim())})}
 
 function renderRail(){
@@ -374,29 +408,33 @@ async function submitAnswers(){
   if(sending)return; sending=true; sendErr=""; renderReview();
   try{
     const res=await fetch("/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({clinic:data.c_name||"",doctor:data.d_name||"",email:data.c_email||"",phone:data.c_phone||"",sections:rows(),text:compile()})});
-    if(!res.ok)throw new Error();
+    if(!res.ok){let d="";try{d=(await res.json()).error||""}catch(_){ } throw new Error(d||("HTTP "+res.status))}
     sent=true; try{localStorage.removeItem(KEY)}catch(e){}
-  }catch(e){sendErr="We could not submit your answers. Check your internet connection and try again. If it keeps failing, WhatsApp us on +91 90992 45605."}
+  }catch(e){sendErr="We could not submit your answers. Please try again, or WhatsApp us on +91 90992 45605."+(e&&e.message?" ("+e.message+")":"")}
   sending=false; renderReview(); window.scrollTo({top:document.querySelector(".shell").offsetTop-10,behavior:"smooth"});
 }
 
 function collect(el){
-  if(!el||!el.name&&!el.dataset.other)return;
-  if(el.dataset.other){data[el.dataset.other+"__other"]=el.value}
-  else if(el.type==="checkbox"){data[el.name]=[...form.querySelectorAll(`input[name="${el.name}"]:checked`)].map(x=>x.value)}
+  if(!el||!el.name)return;
+  if(el.type==="checkbox"){data[el.name]=[...form.querySelectorAll(`input[name="${el.name}"]:checked`)].map(x=>x.value);
+    const b=form.querySelector(`[data-all="${el.name}"]`); if(b)b.textContent=allOn(FIELDS[el.name])?"Clear all":"Select all"}
   else if(el.type==="radio"){data[el.name]=el.value}
   else data[el.name]=el.value;
-  try{localStorage.setItem(KEY,JSON.stringify(data));const sv=document.getElementById("saved");if(sv)sv.textContent="Saved on this device"}catch(e){}
-  renderRail();
+  save(); renderRail();
 }
 form.addEventListener("input",e=>collect(e.target));
 form.addEventListener("change",e=>collect(e.target));
 form.addEventListener("submit",e=>e.preventDefault());
+form.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.dataset&&e.target.dataset.add){e.preventDefault();addOption(e.target.dataset.add)}});
 
 function go(i){cur=Math.max(0,Math.min(S.length,i));render();window.scrollTo({top:document.querySelector(".shell").offsetTop-10,behavior:"smooth"})}
 document.addEventListener("click",e=>{
   const g=e.target.closest("[data-go]"); if(g){go(+g.dataset.go);return}
   if(e.target.id==="submitBtn")submitAnswers();
+  const ab=e.target.closest("[data-addbtn]"); if(ab){addOption(ab.dataset.addbtn);return}
+  const rm=e.target.closest("[data-remove]"); if(rm){e.preventDefault();const id=rm.dataset.remove,v=rm.dataset.val;
+    data[id+"__extra"]=(data[id+"__extra"]||[]).filter(o=>o!==v); data[id]=(data[id]||[]).filter(o=>o!==v); refreshField(id);return}
+  const al=e.target.closest("[data-all]"); if(al){const f=FIELDS[al.dataset.all]; data[f.id]=allOn(f)?[]:allOpts(f).slice(); refreshField(f.id);return}
 });
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2600)}
 document.getElementById("factSec").textContent=S.length;
