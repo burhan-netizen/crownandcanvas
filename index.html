@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: one calm column, stepper with a section rail; one section on screen at a time, review screen at the end */
+/* Layout: one calm centred column; one section on screen at a time with a compact section picker, review screen at the end */
 :root{
   --ink:#0D0D0D; --slate:#6F6E69; --slate-soft:#A8A6A0; --paper:#FAFAF8; --card:#FFFFFF;
   --hair:#E4E1D9; --amber:#FFC53D; --amber-ink:#0D0D0D; --field:#FFFFFF; --chip:#F2F0EA;
@@ -23,7 +23,7 @@
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
-.wrap{max-width:1040px;margin:0 auto}
+.wrap{max-width:820px;margin:0 auto}
 .mono{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 
 header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 18px;border-bottom:1px solid var(--hair)}
@@ -44,18 +44,17 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .facts .mono{color:var(--slate-soft);font-size:10.5px}
 .facts b{font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:-.01em}
 
-.shell{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start;margin-top:10px}
-nav.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:grid;gap:2px}
-nav.rail button{all:unset;cursor:pointer;display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;padding:9px 10px;border-radius:6px;color:var(--slate);font-size:14px}
-nav.rail button:hover{background:var(--chip);color:var(--ink)}
-nav.rail button:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
-nav.rail button[aria-current="step"]{color:var(--ink);font-weight:600;background:var(--chip)}
-nav.rail .n{font-family:var(--f-mono);font-size:11px;color:var(--slate-soft)}
-nav.rail .tick{width:8px;height:8px;border-radius:2px;background:transparent;border:1px solid var(--hair)}
-nav.rail .done .tick{background:var(--amber);border-color:var(--amber)}
-.progress{height:3px;background:var(--hair);border-radius:3px;overflow:hidden;margin:4px 10px 12px}
-.progress i{display:block;height:100%;background:var(--amber);width:0;transition:width .3s}
-
+.shell{margin-top:14px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mini{display:grid;gap:5px;min-width:0}
+.mini span{font-size:12.5px;color:var(--slate)}
+.jump{width:auto;max-width:100%;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--ink);background:var(--chip);border:1px solid transparent;border-radius:999px;padding:6px 30px 6px 12px;cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--slate) 50%),linear-gradient(135deg,var(--slate) 50%,transparent 50%);background-position:calc(100% - 15px) 50%,calc(100% - 10px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.jump:hover{border-color:var(--hair)}
+.summary .sh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px}
+.summary .sh h3{margin:0}
+.edit{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);border-bottom:1.5px solid var(--amber);line-height:1.3}
+.edit:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
 section.step{display:grid;gap:26px}
 .step-head{display:grid;gap:10px;padding-bottom:22px;border-bottom:1px solid var(--hair)}
@@ -63,7 +62,7 @@ section.step{display:grid;gap:26px}
 .segs i{height:3px;border-radius:2px;background:var(--hair)}
 .segs i.on{background:var(--amber)}
 .segs i.cur{background:var(--ink)}
-.step-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--slate)}
+.step-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--slate)}
 .step-meta .num{color:var(--ink)}
 .step-head h2{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.6vw,32px);line-height:1.15;letter-spacing:-.02em;margin:0;text-wrap:balance}
 .step-head p{margin:0;color:var(--slate);max-width:62ch}
@@ -138,14 +137,37 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--hair);display
 footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--amber)}
 
 @media (max-width:820px){
-  .shell{grid-template-columns:minmax(0,1fr);gap:20px}
-  nav.rail{display:none}
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
   .facts div:nth-child(3){padding-left:0;border-left:0}
   .facts div:nth-child(n+3){border-top:1px solid var(--hair)}
   .fields,.checklist{grid-template-columns:minmax(0,1fr)}
   .send{grid-template-columns:minmax(0,1fr)}
 }
+@media (max-width:600px){
+  body{font-size:15px}
+  header.top .mono{display:none}
+  .logo img{height:26px}
+  .intro{padding-block:26px 18px;gap:12px}
+  .facts div{padding:12px 10px 12px 0}
+  .facts div+div{padding-left:12px}
+  .facts b{font-size:15px}
+  section.step{gap:22px}
+  .step-head{padding-bottom:16px}
+  .trio{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .chips{gap:6px}
+  .chips span,.allbtn{padding:8px 12px;font-size:13.5px}
+  .addbtn{padding:0 14px}
+  .note{padding:12px 14px}
+  .nav-btns{position:sticky;bottom:0;z-index:5;background:var(--paper);margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));padding:12px max(16px, env(safe-area-inset-left, 0px)) calc(12px + env(safe-area-inset-bottom, 0px));flex-wrap:nowrap}
+  .nav-btns .saved{display:none}
+  .nav-btns .btn{flex:1;padding:13px 14px}
+  .nav-btns>span:empty{display:none}
+  .submitbar{padding:16px}
+  .submitbar .btn{width:100%;box-sizing:border-box}
+  .done-card{padding:20px}
+  footer{flex-direction:column;margin-top:36px}
+}
+@media (max-width:380px){.trio{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -163,7 +185,6 @@ footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--amb
   </div>
 
   <div class="shell">
-    <nav class="rail" id="rail" aria-label="Sections"></nav>
     <main>
       <form id="form" novalidate></form>
     </main>
@@ -178,6 +199,7 @@ footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--amb
 
 <script>
 const PHONE="919099245605", EMAIL="burhan@magolabs.in";
+const intlOn=d=>!!d.i_has&&d.i_has!=="No";
 const S=[
  {id:"doctor",title:"About you",desc:"Patients choose a dentist they trust. These details build your doctor profile and the About page.",fields:[
   {id:"d_name",label:"Full name as it should appear on the website",type:"text",ph:"Dr. Ananya Sharma",req:1},
@@ -202,17 +224,15 @@ const S=[
   {id:"c_phone",label:"Phone number for appointments",type:"tel"},
   {id:"c_wa",label:"WhatsApp number (if different)",type:"tel"},
   {id:"c_email",label:"Clinic email",type:"email"},
-  {id:"c_year",label:"Year the clinic opened",type:"number"},
+  {id:"__glance",type:"group",label:"Clinic at a glance",wide:1,items:[{id:"c_year",label:"Year opened",type:"number",ph:"2021"},{id:"c_chairs",label:"Dental chairs",type:"number",ph:"2"},{id:"t_staff",label:"Support team",type:"text",ph:"3 people"}]},
   {id:"c_hours",label:"Clinic timings",type:"textarea",wide:1,ph:"Mon to Sat 10 am to 2 pm and 5 pm to 9 pm, Sunday by appointment"},
   {id:"c_visit",label:"How do patients visit?",type:"chips",options:["By appointment only","Walk-ins welcome","Both"]},
   {id:"c_emerg",label:"Do you handle dental emergencies?",type:"chips",options:["Yes, same day","Yes, 24x7 on call","No"]},
-  {id:"c_chairs",label:"Number of dental chairs",type:"number"},
   {id:"c_facil",all:1,label:"Facilities",type:"multi",options:["Parking","Wheelchair access","Lift","Air conditioned","Kids play area","Card / UPI payments","Waiting lounge"],other:1,wide:1},
   {id:"c_branch",label:"Other branches, if any",type:"textarea",wide:1}
  ]},
  {id:"team",title:"Your team",desc:"Showing the people behind the care makes a clinic feel real and trustworthy.",fields:[
   {id:"t_docs",label:"Associate or visiting dentists",type:"textarea",wide:1,hint:"Name, qualification and speciality for each. Mention if they visit on fixed days."},
-  {id:"t_staff",label:"Support team size",type:"text",ph:"2 assistants, 1 front desk"},
   {id:"t_show",label:"Should the team appear on the website?",type:"chips",options:["Yes, with photos","Names only","Only me for now"]}
  ]},
  {id:"services",title:"Services you offer",desc:"Select everything you provide. We will create clear, search friendly pages for your key treatments.",fields:[
@@ -220,11 +240,11 @@ const S=[
   {id:"s_top",label:"Top 3 treatments you want more patients for",type:"textarea",wide:1,hint:"These get the most prominence on the homepage and in Google targeting."},
   {id:"s_crown",all:1,label:"Crown and bridge materials you offer",type:"multi",wide:1,options:["Zirconia","E-max (lithium disilicate)","PFM (porcelain fused to metal)","Metal","Temporary / provisional"],other:1},
   {id:"s_lab",label:"Who makes your crowns, dentures and prosthetics?",type:"chips",options:["In house lab","Partner lab","Both"]},
-  {id:"s_labname",label:"Lab name or country of materials, if you want it mentioned",type:"text",wide:1,hint:"Some patients trust named labs or imported materials more."},
+  {id:"s_labname",show:d=>["Partner lab","Both"].includes(d.s_lab),label:"Lab name or country of materials, if you want it mentioned",type:"text",wide:1,hint:"Some patients trust named labs or imported materials more."},
   {id:"s_warranty",label:"Warranty you give on crowns, bridges or implants",type:"text",wide:1,ph:"Zirconia crowns: 10 years, implants: lifetime on fixture"},
   {id:"s_rehab",label:"Full mouth rehab or implant cases done so far (approx.)",type:"text",ph:"150+ implants, 30 full mouth cases"},
   {id:"s_price",label:"Should prices appear on the website?",type:"chips",options:["Yes, exact prices","Starting from prices","No, on consultation"]},
-  {id:"s_pricelist",label:"Prices or starting prices for key treatments",type:"textarea",wide:1,hint:"Only if you chose to show them. Include INR and, if you quote them, CAD and AUD."},
+  {id:"s_pricelist",show:d=>["Yes, exact prices","Starting from prices"].includes(d.s_price),label:"Prices or starting prices for key treatments",type:"textarea",wide:1,hint:"Include INR and, if you quote them, CAD and AUD."},
   {id:"s_pay",all:1,label:"Payment options",type:"multi",options:["Cash","UPI","Cards","EMI / no cost EMI","Insurance (cashless)","Insurance (reimbursement)","International cards","Bank transfer"],other:1,wide:1},
   {id:"s_consult",label:"Consultation fee",type:"text",ph:"INR 500, adjusted against treatment"}
  ]},
@@ -234,19 +254,19 @@ const S=[
   {id:"tc_steril",label:"Your sterilisation and safety protocol",type:"textarea",wide:1,hint:"For example single use kits, sealed pouches, Class B autoclave cycles, fumigation."}
  ]},
  {id:"intl",title:"International patients",desc:"You also treat patients from Canada and Australia. This section helps us build a dedicated page that answers their questions before they fly.",fields:[
-  {id:"i_countries",label:"Where do your international patients come from?",type:"multi",options:["Canada","Australia","USA","UK","New Zealand","UAE / Gulf"],other:1,wide:1},
-  {id:"i_who",label:"Who are they mostly?",type:"chips",options:["NRIs visiting family","Medical tourists","Both"]},
-  {id:"i_volume",label:"Roughly how many international patients a year?",type:"text",ph:"30 to 40"},
-  {id:"i_treat",label:"Treatments they usually come for",type:"textarea",wide:1,hint:"Implants, full mouth rehab, smile makeovers, aligners and so on."},
-  {id:"i_why",label:"Why do they choose you over a dentist at home?",type:"textarea",wide:1,hint:"Cost difference, waiting times, quality, trust, speed. Rough cost comparisons help a lot."},
-  {id:"i_virtual",label:"Do you offer a virtual consultation before travel?",type:"chips",options:["Yes, video call","Yes, on WhatsApp with photos / X-rays","Not yet, but open to it","No"]},
-  {id:"i_tz",label:"When can you take calls from Canada / Australia?",type:"text",wide:1,ph:"Early mornings IST for Canada, evenings IST for Australia"},
-  {id:"i_stay",label:"Typical stay needed for main treatments",type:"textarea",wide:1,ph:"Implants: 2 visits, 5 days then 4 days after 3 months"},
-  {id:"i_help",all:1,label:"Help you offer visiting patients",type:"multi",wide:1,options:["Airport pickup","Hotel / stay suggestions","Local transport","Treatment plan & quote in advance","Express timelines","Coordinator on WhatsApp","Documents for insurance claims"],other:1},
-  {id:"i_currency",label:"Do you quote in CAD / AUD?",type:"chips",options:["Yes","INR only","On request"]},
-  {id:"i_pay",all:1,label:"How do international patients pay?",type:"multi",options:["International cards","Wire transfer","Wise / remittance","Cash on visit","Advance deposit"],other:1,wide:1},
-  {id:"i_after",label:"How do you handle aftercare once they fly back?",type:"textarea",wide:1,hint:"Follow ups, warranty or guarantee on work, tie ups with dentists abroad."},
-  {id:"i_reviews",label:"Do you have reviews or videos from international patients?",type:"chips",options:["Yes, can share","A few","Not yet"]}
+  {id:"i_has",label:"Do patients travel from abroad for treatment with you?",type:"chips",options:["Yes, regularly","Sometimes","Not yet, but I want them to","No"]},
+  {show:intlOn,id:"i_countries",label:"Where do your international patients come from?",type:"multi",options:["Canada","Australia","USA","UK","New Zealand","UAE / Gulf"],other:1,wide:1},
+  {show:intlOn,id:"i_who",label:"Who are they mostly?",type:"chips",options:["NRIs visiting family","Medical tourists","Both"]},
+  {show:intlOn,id:"i_volume",label:"Roughly how many international patients a year?",type:"text",ph:"30 to 40"},
+  {show:intlOn,id:"i_treat",label:"Treatments they usually come for",type:"textarea",wide:1,hint:"Implants, full mouth rehab, smile makeovers, aligners and so on."},
+  {show:intlOn,id:"i_virtual",label:"Do you offer a virtual consultation before travel?",type:"chips",options:["Yes, video call","Yes, on WhatsApp with photos / X-rays","Not yet, but open to it","No"]},
+  {show:intlOn,id:"i_tz",label:"When can you take calls from Canada / Australia?",type:"text",wide:1,ph:"Early mornings IST for Canada, evenings IST for Australia"},
+  {show:intlOn,id:"i_stay",label:"Typical stay needed for main treatments",type:"textarea",wide:1,ph:"Implants: 2 visits, 5 days then 4 days after 3 months"},
+  {show:intlOn,id:"i_help",all:1,label:"Help you offer visiting patients",type:"multi",wide:1,options:["Airport pickup","Hotel / stay suggestions","Local transport","Treatment plan & quote in advance","Express timelines","Coordinator on WhatsApp","Documents for insurance claims"],other:1},
+  {show:intlOn,id:"i_currency",label:"Do you quote in CAD / AUD?",type:"chips",options:["Yes","INR only","On request"]},
+  {show:intlOn,id:"i_pay",all:1,label:"How do international patients pay?",type:"multi",options:["International cards","Wire transfer","Wise / remittance","Cash on visit","Advance deposit"],other:1,wide:1},
+  {show:intlOn,id:"i_after",label:"How do you handle aftercare once they fly back?",type:"textarea",wide:1,hint:"Follow ups, warranty or guarantee on work, tie ups with dentists abroad."},
+  {show:intlOn,id:"i_reviews",label:"Do you have reviews or videos from international patients?",type:"chips",options:["Yes, can share","A few","Not yet"]}
  ]},
  {id:"proof",title:"Patient trust",desc:"Real proof turns website visitors into booked appointments.",fields:[
   {id:"p_rating",label:"Current Google rating and number of reviews",type:"text",ph:"4.9 from 320 reviews"},
@@ -258,12 +278,11 @@ const S=[
  ]},
  {id:"goals",title:"Website goals",desc:"What should the website do for your practice, and what should it say first?",fields:[
   {id:"g_goal",all:1,label:"Main goals for the website",type:"multi",wide:1,options:["More appointment calls","More WhatsApp enquiries","Attract international patients","Rank higher on Google locally","Build credibility","Promote high value treatments","Replace an outdated website"],other:1},
-  {id:"g_highlight",label:"What do you want highlighted most on the website?",type:"textarea",wide:1,req:1,hint:"The first things a new patient should notice about you and your clinic."},
-  {id:"g_usp",label:"What makes you different from other clinics nearby?",type:"textarea",wide:1},
+  {id:"g_highlight",label:"What should patients notice first, and what makes you different?",type:"textarea",wide:1,req:1,hint:"What sets you apart from other clinics nearby, and why patients abroad choose you over a dentist at home (cost, speed, quality, trust)."},
   {id:"g_patients",label:"Your ideal patients",type:"textarea",wide:1,hint:"Families, working professionals, seniors needing implants, anxious patients, NRIs..."},
   {id:"g_areas",label:"Areas you want to be found in on Google",type:"textarea",wide:1,ph:"Dwarka Sector 6, 10, 12, Dwarka Mor, Palam, Janakpuri, Uttam Nagar"},
   {id:"g_book",all:1,label:"How should patients book?",type:"multi",options:["Booking calendar built into the website","Call","WhatsApp","Online enquiry form","Practo / booking app link"],other:1,wide:1},
-  {id:"g_slots",label:"For online booking: appointment length and any days or slots to block",type:"text",wide:1,ph:"30 min slots, lunch break 2 to 3 pm"},
+  {id:"g_slots",show:d=>(d.g_book||[]).includes("Booking calendar built into the website"),label:"For the booking calendar: appointment length and any days or slots to block",type:"text",wide:1,ph:"30 min slots, lunch break 2 to 3 pm"},
   {id:"g_faq",label:"Questions patients ask you most often",type:"textarea",wide:1,hint:"These become your FAQ section and help with Google."},
   {id:"g_avoid",label:"Anything you do not want on the website",type:"textarea",wide:1}
  ]},
@@ -273,18 +292,15 @@ const S=[
   {id:"b_colors",label:"Brand colours",type:"text",ph:"Purple and gold, as on the signboard",hint:"Keep the signboard colours or open to a refined palette?"},
   {id:"b_site",label:"Current website or domain name",type:"text",ph:"www.example.com",wide:1,hint:"Do you own a domain already? Who manages it?"},
   {id:"b_ig",label:"Instagram",type:"text",ph:"@clinicname"},
-  {id:"b_fb",label:"Facebook",type:"text"},
-  {id:"b_yt",label:"YouTube or other channels",type:"text"},
-  {id:"b_listing",label:"Practo, Justdial or other listings",type:"text"},
-  {id:"b_like",label:"Websites you like (any industry)",type:"textarea",wide:1,hint:"Links and what you like about each."},
-  {id:"b_comp",label:"Clinics you see as competitors",type:"textarea",wide:1},
+  {id:"b_other",label:"Other profiles and listings",type:"text",ph:"Facebook, YouTube, Practo, Justdial links"},
+  {id:"b_ref",label:"Websites you like, and clinics you see as competitors",type:"textarea",wide:1,hint:"Links are enough. Add a word on what you like or dislike about each."},
   {id:"b_feel",label:"How should your website feel?",type:"multi",options:["Premium","Warm & friendly","Modern & clinical","Calm","Family focused","Luxury"],other:1,wide:1}
  ]},
  {id:"files",title:"Photos and files",desc:"Good photos make the biggest difference to how your website feels. Send them on WhatsApp as Documents so they keep their full quality.",fields:[
   {id:"__checklist",type:"checklist",items:["Your professional photo (high resolution, plain background if possible)","Clinic logo (PNG or SVG, the original file)","Clinic exterior and signboard","Reception and waiting area","Treatment rooms and chairs","Equipment close ups","Team photos","Degree and certification scans","Awards and certificates","Before and after cases (with consent)","Patient video testimonials","Any brochure or visiting card"]},
   {id:"__wa",type:"wa"},
   {id:"f_send",label:"How will you send your files?",type:"chips",options:["WhatsApp as Documents","Google Drive link","Email"]},
-  {id:"f_drive",label:"Google Drive link, if you prefer",type:"url",ph:"https://drive.google.com/..."},
+  {id:"f_drive",show:d=>d.f_send==="Google Drive link",label:"Google Drive link",type:"url",ph:"https://drive.google.com/..."},
   {id:"f_extra",label:"Anything else we should know?",type:"textarea",wide:1}
  ]}
 ];
@@ -295,17 +311,18 @@ const PREFILL={d_name:"Dr. Mamta Kumari",d_title:"Prosthodontist",d_quals:"MDS (
  c_gbp:"https://share.google/wMc9wOzwf66yKBB3K",
  c_addr:"Ground Floor, Flat No 123, DDA Sunview Apartment, near Gate No 3, Pocket 4, Sector 11 Dwarka, Delhi 110075",
  c_phone:"+91 99991 74483",c_hours:"All days, 10:00 AM to 8:00 PM",p_rating:"5.0 from 8 Google reviews",
- b_site:"No website yet",g_areas:"Dwarka Sector 11, "};
+ b_site:"No website yet",i_has:"Yes, regularly",g_areas:"Dwarka Sector 11, "};
 let data={}; try{data=JSON.parse(localStorage.getItem(KEY)||"null")||Object.assign({},PREFILL)}catch(e){data=Object.assign({},PREFILL)}
 Object.keys(data).filter(k=>k.endsWith("__other")).forEach(k=>{const id=k.slice(0,-7),v=(data[k]||"").trim();
   if(v){data[id+"__extra"]=(data[id+"__extra"]||[]).concat(v);data[id]=(Array.isArray(data[id])?data[id]:[]).concat(v)} delete data[k]});
-let cur=0;
-const form=document.getElementById("form"), rail=document.getElementById("rail");
+let cur=0, fromReview=false;
+const form=document.getElementById("form");
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function fieldHTML(f){
   if(f.type==="wa") return `<div class="f wide"><div class="note"><span class="mono">Send on WhatsApp as Documents</span>Open a chat with Mago Labs on <b>+91 90992 45605</b>, tap the attach icon, choose <b>Document</b> and select your photos and logo. Sending as a Document keeps the original quality. Normal photo sharing compresses them.<div><a class="btn dark" style="margin-top:8px" href="https://wa.me/${PHONE}?text=${encodeURIComponent("Hi Mago Labs, sending the photos and logo for the Crown & Canvas Dental Clinic website.")}" target="_blank" rel="noopener">Open WhatsApp chat</a></div></div></div>`;
   if(f.type==="checklist") return `<div class="f wide"><span class="l">Files to send</span><ul class="checklist">${f.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div>`;
+  if(f.type==="group") return `<div class="f wide"><span class="l">${esc(f.label)}</span><div class="trio">${f.items.map(x=>`<label class="mini"><span>${esc(x.label)}</span><input type="${x.type}" id="${x.id}" name="${x.id}"${x.ph?` placeholder="${esc(x.ph)}"`:""} value="${esc(data[x.id]||"")}"${x.type==="number"?' inputmode="numeric" min="0"':""}></label>`).join("")}</div></div>`;
   const w=f.wide?" wide":"", r=f.req?'<span class="req">*</span>':"";
   const hint=f.hint?`<span class="h">${esc(f.hint)}</span>`:"";
   const v=data[f.id];
@@ -324,7 +341,10 @@ function fieldHTML(f){
   return `<div class="f${w}"><label class="l" for="${f.id}">${esc(f.label)}${r}</label>${hint}${ctrl}</div>`;
 }
 
-const FIELDS={}; S.forEach(s=>s.fields.forEach(f=>FIELDS[f.id]=f));
+const FIELDS={}; S.forEach(s=>s.fields.forEach(f=>{FIELDS[f.id]=f;(f.items||[]).forEach(x=>FIELDS[x.id]=x)}));
+const vis=f=>!f.show||f.show(data);
+const flat=sec=>sec.fields.filter(vis).flatMap(f=>f.type==="group"?f.items:[f]).filter(f=>f.type!=="checklist"&&f.type!=="wa");
+const sig=()=>cur<S.length?S[cur].fields.map(vis).join(""):"";
 function allOpts(f){return f.options.concat(data[f.id+"__extra"]||[])}
 function allOn(f){const v=data[f.id]||[];return Array.isArray(v)&&allOpts(f).every(o=>v.includes(o))}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(data));const sv=document.getElementById("saved");if(sv)sv.textContent="Saved on this device"}catch(e){}}
@@ -344,17 +364,15 @@ function addOption(id){
   const cur=Array.isArray(data[id])?data[id]:[]; if(!cur.includes(match))cur.push(match); data[id]=cur;
   refreshField(id,true);
 }
-function filled(s){return s.fields.some(f=>{const v=data[f.id];return Array.isArray(v)?v.length:(v&&String(v).trim())})}
+function rerenderIfNeeded(){}
+function filled(s){return flat(s).some(f=>{const v=data[f.id];return Array.isArray(v)?v.length:(v&&String(v).trim())})}
 
-function renderRail(){
-  rail.innerHTML=S.map((s,i)=>`<button type="button" data-go="${i}" class="${filled(s)?"done":""}" ${i===cur?'aria-current="step"':""}><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(s.title)}</span><span class="tick"></span></button>`).join("")+
-   `<button type="button" data-go="${S.length}" ${cur===S.length?'aria-current="step"':""}><span class="n">11</span><span>Review & submit</span><span></span></button>`;
-}
+function renderRail(){}
 
 function head(i,title,desc){
   const n=S.length+1, segs=Array.from({length:n},(_,k)=>`<i class="${k<i?"on":k===i?"cur":""}"></i>`).join("");
-  const next=i<S.length-1?"Next: "+S[i+1].title:i===S.length-1?"Next: Review & submit":"Last step";
-  return `<div class="step-head"><div class="segs" style="--n:${n}">${segs}</div><div class="step-meta mono"><span><span class="num">${String(i+1).padStart(2,"0")}</span> / ${String(n).padStart(2,"0")}</span><span>${esc(next)}</span></div><h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:""}</div>`;
+  const opts=S.map((s,k)=>`<option value="${k}" ${k===i?"selected":""}>${String(k+1).padStart(2,"0")}  ${esc(s.title)}</option>`).join("")+`<option value="${S.length}" ${i===S.length?"selected":""}>${n}  Review & submit</option>`;
+  return `<div class="step-head"><div class="segs" style="--n:${n}">${segs}</div><div class="step-meta mono"><span><span class="num">${String(i+1).padStart(2,"0")}</span> / ${String(n).padStart(2,"0")}</span><select class="jump" id="jump" aria-label="Jump to a section">${opts}</select></div><h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:""}</div>`;
 }
 function render(){
   if(cur===S.length){renderReview();renderRail();return}
@@ -362,10 +380,10 @@ function render(){
   form.innerHTML=`<section class="step">${head(cur,s.title,s.desc)}
    ${(s.id==="doctor"||s.id==="clinic")?`<div class="note"><span class="mono">Already filled in</span>We took these from your signboard and Google profile. Please check each one and correct anything that has changed.</div>`:""}
    ${s.id==="intl"?`<div class="note"><span class="mono">Why this matters</span>Patients abroad compare clinics online for weeks before booking flights. Clear answers on cost, stay, safety and aftercare are what make them choose you.</div>`:""}
-   <div class="fields">${s.fields.map(fieldHTML).join("")}</div>
+   <div class="fields">${s.fields.filter(vis).map(fieldHTML).join("")}</div>
    <div class="nav-btns">${cur>0?'<button type="button" class="btn ghost" data-go="'+(cur-1)+'">← Back</button>':'<span></span>'}
    <span class="saved mono" id="saved"></span>
-   <button type="button" class="btn primary" data-go="${cur+1}">${cur===S.length-1?"Review answers →":"Continue →"}</button></div></section>`;
+   ${fromReview?`<button type="button" class="btn primary" data-go="${S.length}">Back to review →</button>`:`<button type="button" class="btn primary" data-go="${cur+1}">${cur===S.length-1?"Review answers →":"Continue →"}</button>`}</div></section>`;
   renderRail();
 }
 
@@ -373,8 +391,7 @@ function compile(){
   const out=["MAGO LABS · CROWN & CANVAS DENTAL CLINIC · WEBSITE QUESTIONNAIRE",""];
   S.forEach((s,i)=>{
     const lines=[];
-    s.fields.forEach(f=>{
-      if(f.type==="checklist"||f.type==="wa")return;
+    flat(s).forEach(f=>{
       let v=data[f.id]; if(Array.isArray(v))v=v.slice();
       const o=data[f.id+"__other"];
       if(o&&o.trim()){v=Array.isArray(v)?v.concat("Other: "+o.trim()):(v?[v,"Other: "+o.trim()]:["Other: "+o.trim()])}
@@ -387,7 +404,7 @@ function compile(){
 }
 
 function rows(){
-  return S.map(sec=>({title:sec.title,items:sec.fields.filter(f=>f.type!=="checklist"&&f.type!=="wa").map(f=>{
+  return S.map((sec,idx)=>({idx,title:sec.title,items:flat(sec).map(f=>{
     let v=data[f.id]; v=Array.isArray(v)?v.slice():(v?[v]:[]);
     const o=data[f.id+"__other"]; if(o&&o.trim())v.push("Other: "+o.trim());
     return [f.label,v.join(", ").trim()];}).filter(x=>x[1])})).filter(x=>x.items.length);
@@ -396,10 +413,10 @@ let sent=false, sending=false, sendErr="";
 function renderReview(){
   if(sent){form.innerHTML=`<section class="step"><div class="done-card"><span class="mono" style="color:var(--slate)">Submitted</span><h2>Thank you, Dr. Mamta. Your answers are with us.</h2><p>We will go through everything and get back to you shortly. If you have not sent your photos and logo yet, send them on WhatsApp as Documents to <b>+91 90992 45605</b>.</p><div><a class="btn primary" href="https://wa.me/${PHONE}?text=${encodeURIComponent("Hi Mago Labs, sending the photos and logo for the Crown & Canvas Dental Clinic website.")}" target="_blank" rel="noopener">Send photos on WhatsApp</a></div></div></section>`;return}
   const R=rows();
-  const missing=S.flatMap(s=>s.fields.filter(f=>f.req&&!(data[f.id]&&String(data[f.id]).trim())).map(f=>f.label));
+  const missing=S.flatMap(s=>flat(s).filter(f=>f.req&&!(data[f.id]&&String(data[f.id]).trim())).map(f=>f.label));
   form.innerHTML=`<section class="step review">${head(S.length,"Review and submit","Check your answers below. You can go back to any section to change something, then submit to send them straight to the Mago Labs team.")}
    ${missing.length?`<div class="note"><span class="mono">Still missing</span>${missing.map(esc).join(" · ")}</div>`:""}
-   <div class="summary">${R.length?R.map(r=>`<h3>${esc(r.title)}</h3><dl>${r.items.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`).join(""):"<p>No answers yet. Go back to any section to start.</p>"}</div>
+   <div class="summary">${R.length?R.map(r=>`<div class="sh"><h3>${esc(r.title)}</h3><button type="button" class="edit" data-edit="${r.idx}">Edit</button></div><dl>${r.items.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`).join(""):"<p>No answers yet. Go back to any section to start.</p>"}</div>
    <div class="submitbar"><p class="${sendErr?"err":""}" role="status">${sendErr?esc(sendErr):"Your answers go directly to burhan@magolabs.in. Photos and logo can follow on WhatsApp."}</p>
    <button type="button" class="btn primary" id="submitBtn" ${sending?"disabled":""}>${sending?"Submitting...":"Submit answers"}</button></div>
    <div class="nav-btns"><button type="button" class="btn ghost" data-go="${S.length-1}">← Back to edit</button><span></span></div></section>`;
@@ -415,26 +432,30 @@ async function submitAnswers(){
 }
 
 function collect(el){
+  if(el&&el.id==="jump")return;
   if(!el||!el.name)return;
+  const before=sig();
   if(el.type==="checkbox"){data[el.name]=[...form.querySelectorAll(`input[name="${el.name}"]:checked`)].map(x=>x.value);
     const b=form.querySelector(`[data-all="${el.name}"]`); if(b)b.textContent=allOn(FIELDS[el.name])?"Clear all":"Select all"}
   else if(el.type==="radio"){data[el.name]=el.value}
   else data[el.name]=el.value;
-  save(); renderRail();
+  save();
+  if(sig()!==before){const y=window.scrollY;render();window.scrollTo(0,y)}
 }
 form.addEventListener("input",e=>collect(e.target));
-form.addEventListener("change",e=>collect(e.target));
+form.addEventListener("change",e=>{if(e.target.id==="jump"){fromReview=false;go(+e.target.value);return} collect(e.target)});
 form.addEventListener("submit",e=>e.preventDefault());
 form.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.dataset&&e.target.dataset.add){e.preventDefault();addOption(e.target.dataset.add)}});
 
-function go(i){cur=Math.max(0,Math.min(S.length,i));render();window.scrollTo({top:document.querySelector(".shell").offsetTop-10,behavior:"smooth"})}
+function go(i){cur=Math.max(0,Math.min(S.length,i)); if(cur===S.length)fromReview=false; render();window.scrollTo({top:document.querySelector(".shell").offsetTop-10,behavior:"smooth"})}
 document.addEventListener("click",e=>{
+  const ed=e.target.closest("[data-edit]"); if(ed){fromReview=true;go(+ed.dataset.edit);return}
   const g=e.target.closest("[data-go]"); if(g){go(+g.dataset.go);return}
   if(e.target.id==="submitBtn")submitAnswers();
   const ab=e.target.closest("[data-addbtn]"); if(ab){addOption(ab.dataset.addbtn);return}
   const rm=e.target.closest("[data-remove]"); if(rm){e.preventDefault();const id=rm.dataset.remove,v=rm.dataset.val;
-    data[id+"__extra"]=(data[id+"__extra"]||[]).filter(o=>o!==v); data[id]=(data[id]||[]).filter(o=>o!==v); refreshField(id);return}
-  const al=e.target.closest("[data-all]"); if(al){const f=FIELDS[al.dataset.all]; data[f.id]=allOn(f)?[]:allOpts(f).slice(); refreshField(f.id);return}
+    data[id+"__extra"]=(data[id+"__extra"]||[]).filter(o=>o!==v); data[id]=(data[id]||[]).filter(o=>o!==v); refreshField(id);rerenderIfNeeded();return}
+  const al=e.target.closest("[data-all]"); if(al){const f=FIELDS[al.dataset.all]; const b4=sig(); data[f.id]=allOn(f)?[]:allOpts(f).slice(); refreshField(f.id); if(sig()!==b4){const y=window.scrollY;render();window.scrollTo(0,y)} return}
 });
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2600)}
 document.getElementById("factSec").textContent=S.length;
